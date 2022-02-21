@@ -40,6 +40,27 @@ function App() {
 		setSelectedNote(note);
 		localStorage.setItem('selectedNote', note.id);
 	};
+
+	const postFav = async (fav) => {
+		console.log(fav);
+		try {
+			const res = await fetch('http://localhost:5000/api/v1/favorites', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ id: fav }),
+			});
+			return res;
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const favorite = async (note) => {
+		const res = await postFav(note.id);
+	};
+
 	return (
 		<Grid minH="100vh">
 			<Flex color="white">
@@ -63,7 +84,10 @@ function App() {
 				<Box flex="1" bg="theme.background">
 					<Center w="100%" h="100%">
 						{selectedNote && (
-							<SelectedNoteContainer note={selectedNote} />
+							<SelectedNoteContainer
+								note={selectedNote}
+								handleFavorite={favorite}
+							/>
 						)}
 					</Center>
 				</Box>

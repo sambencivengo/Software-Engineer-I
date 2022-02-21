@@ -1,4 +1,4 @@
-import { Box, Divider, Text } from '@chakra-ui/react';
+import { Box, Button, Divider, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 const NoteCard = ({ note, selectNote, selectedNote }) => {

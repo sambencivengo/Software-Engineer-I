@@ -1,5 +1,6 @@
 import {
 	Box,
+	Button,
 	Divider,
 	HStack,
 	Link,
@@ -9,9 +10,7 @@ import {
 } from '@chakra-ui/react';
 import Links from './Links';
 
-const SelectedNoteContainer = ({ note }) => {
-	console.log(note);
-
+const SelectedNoteContainer = ({ note, handleFavorite }) => {
 	return (
 		<>
 			<Box
@@ -37,6 +36,14 @@ const SelectedNoteContainer = ({ note }) => {
 							  })
 							: note.content}
 					</Text>
+					<Button
+						onClick={() => {
+							handleFavorite(note);
+						}}
+					>
+						❤️
+					</Button>
+
 					<Divider />
 					{note.title.includes('Sam Bencivengo') && <Links />}
 				</Box>
