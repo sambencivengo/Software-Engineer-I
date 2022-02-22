@@ -5,8 +5,8 @@ const Links = () => {
 		<Flex align="bottom">
 			<HStack spacing="24px">
 				<Text marginLeft="20px" color="blue" fontSize={'2xl'}>
-					<Link href="sambencivengo.com" isExternal>
-						sambencivengo.com{' '}
+					<Link href="https://sambencivengo.com" isExternal>
+						sambencivengo.com
 					</Link>
 				</Text>
 				<Text marginLeft="20px" color="blue" fontSize={'2xl'}>

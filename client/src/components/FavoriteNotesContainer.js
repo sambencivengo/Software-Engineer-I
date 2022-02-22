@@ -1,15 +1,13 @@
-import { Divider, useStyleConfig, VStack } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { Divider, VStack } from '@chakra-ui/react';
 import NoteCard from './NoteCard';
 
-const FavoriteNotesContainer = ({ favorites, selectNote, selectedNote }) => {
+const FavoriteNotesContainer = ({ notes, selectNote, selectedNote }) => {
 	return (
 		<>
 			<VStack spacing={null}>
 				<Divider />
-				{favorites &&
-					favorites.map((note) => {
-						console.log(note);
+				{notes &&
+					notes.map((note = {}) => {
 						return (
 							<>
 								<NoteCard
@@ -21,8 +19,6 @@ const FavoriteNotesContainer = ({ favorites, selectNote, selectedNote }) => {
 							</>
 						);
 					})}
-
-				{/* <Text>{notes.numberOfHits}</Text> */}
 			</VStack>
 		</>
 	);

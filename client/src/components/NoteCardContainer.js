@@ -12,14 +12,12 @@ const NoteCardContainer = ({ notes, selectNote, selectedNote }) => {
 							<NoteCard
 								selectedNote={selectedNote}
 								selectNote={selectNote}
-								key={note.id}
+								key={notes.data.id}
 								note={note}
 							/>
 						</>
 					);
 				})}
-
-				{/* <Text>{notes.numberOfHits}</Text> */}
 			</VStack>
 		</>
 	);

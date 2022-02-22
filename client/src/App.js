@@ -1,8 +1,6 @@
 import {
 	Box,
-	Button,
 	Center,
-	Drawer,
 	Flex,
 	Grid,
 	Tab,
@@ -20,15 +18,26 @@ import FavoriteNotesContainer from './components/FavoriteNotesContainer';
 import NoteCardContainer from './components/NoteCardContainer';
 import SelectedNoteContainer from './components/SelectedNoteContainer';
 
-const url = 'http://localhost:5000/api/v1/notes';
-const favoritesURL = 'http://localhost:5000/api/v1/favorites';
-
 function App() {
+	const [notes, setNotes] = useState(null);
+	const [favNotes, setFavNotes] = useState(null);
+	const [error, setError] = useState(null);
+	const [selectedNote, setSelectedNote] = useState(null);
+	const url = 'http://localhost:5000/api/v1/notes';
+
 	const fetchNotes = async (url = '') => {
 		try {
 			const res = await fetch(url);
 			const data = await res.json();
+
+			const favorites = await data.data.filter(
+				(note) => note.favorite === true
+			);
+
 			setNotes(data);
+
+			setFavNotes(favorites);
+
 			if (localStorage['selectedNote']) {
 				const savedNote = localStorage.getItem('selectedNote');
 				const found = data.data.find((note) => {
@@ -45,27 +54,9 @@ function App() {
 			setError(error);
 		}
 	};
-	const [notes, setNotes] = useState(null);
-	const [favoriteNotes, setFavoriteNotes] = useState(null);
-	const [error, setError] = useState(null);
-	const [selectedNote, setSelectedNote] = useState(null);
-
-	const fetchFavorites = async (url) => {
-		try {
-			const res = await fetch(favoritesURL);
-			const data = await res.json();
-			console.log(data);
-			setFavoriteNotes(data);
-			return data;
-		} catch (error) {
-			console.log(error);
-		}
-	};
 
 	useEffect(() => {
 		fetchNotes(url);
-
-		fetchFavorites(favoritesURL);
 	}, []);
 
 	const selectNote = (note) => {
@@ -74,8 +65,6 @@ function App() {
 	};
 
 	const postFav = async (note) => {
-		note.favorite = true;
-
 		try {
 			const res = await fetch('http://localhost:5000/api/v1/favorites', {
 				method: 'PATCH',
@@ -93,13 +82,22 @@ function App() {
 
 	const favorite = async (note) => {
 		const res = await postFav(note);
+
+		fetchNotes(url);
+
 		console.log(res);
 	};
 
 	return (
 		<Grid minH="100vh">
-			<Flex color="white" overflowX="scroll">
-				<Box w="50vh" bg="theme.primary" boxShadow="10px 10px">
+			<Flex color="white">
+				<Box
+					w="52vh"
+					bg="theme.primary"
+					boxShadow="10px 10px"
+					maxHeight="100vh"
+					overflowY="scroll"
+				>
 					<VStack>
 						<Text
 							as="em"
@@ -122,9 +120,7 @@ function App() {
 							<TabList>
 								<Tab>Notes</Tab>
 								<Tab
-									onClick={async () =>
-										await fetchFavorites(favoritesURL)
-									}
+									onClick={async () => await fetchNotes(url)}
 								>
 									Favorites
 								</Tab>
@@ -146,17 +142,12 @@ function App() {
 									)}
 								</TabPanel>
 								<TabPanel>
-									<FavoriteNotesContainer
-										favorites={favoriteNotes}
-										selectNote={selectNote}
-										selectedNote={selectedNote}
-									/>
-
-									{error && (
-										<h1>
-											Oops!! There was a problem grabbing
-											your notes
-										</h1>
+									{notes && (
+										<FavoriteNotesContainer
+											notes={favNotes}
+											selectNote={selectNote}
+											selectedNote={selectedNote}
+										/>
 									)}
 								</TabPanel>
 								<TabPanel>
