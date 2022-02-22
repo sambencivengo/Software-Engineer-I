@@ -64,6 +64,14 @@ const data = [
 	},
 	{
 		id: 6,
+		title: 'Dear Spencer & Ryan,',
+		favorite: false,
+		list: false,
+		content:
+			"Thank you so much for giving me a chance to interview today. I had a great time working under your direction and really enjoyed talking with you both. I have finished adding the favorite feature you asked for, and decided to go with a slightly different approach than I had initially planned during our meeting. I added a boolean property to each 'note' in the database so it could be easily toggled with a PATCH request and then filtered on the frontend with a single GET endpoint. This is how I would do it if the feature was intended from the project's genisis. I also read more of the Chakra docs and decided to set up my favorites container as a 'Tab' component, it felt like a much more natural way of organizing the data. Thank you again for taking the time to work and speak with me, I look forward to hearing from you soon.",
+	},
+	{
+		id: 7,
 		title: 'Who is Sam Bencivengo?',
 		favorite: false,
 		list: false,

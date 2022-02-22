@@ -1,11 +1,7 @@
 const express = require('express');
 const notesRouter = express.Router();
 const { getAllNotes } = require('../controllers/notesController');
-const {
-	getFavs,
-	postFavs,
-	favNote,
-} = require('../controllers/favoritesController');
+const { getFavs, favNote } = require('../controllers/favoritesController');
 
 notesRouter.route('/notes').get(getAllNotes);
 

@@ -5,6 +5,7 @@ const getFavs = async (req, res) => {
 	try {
 		res.status(200).json(runningFavs);
 	} catch (error) {
+		
 		console.log(error);
 	}
 };
@@ -12,12 +13,12 @@ const getFavs = async (req, res) => {
 const favNote = async (req, res) => {
 	try {
 		const index = data.findIndex((note) => note.id === req.body.note.id);
-		if (data[index].favorite) {
-			res.status(400).json(
-				'This note is already added to your favorites'
-			);
+		if (data[index].favorite === true) {
+			const note = data[index];
+			note.favorite = false;
+		} else {
+			data[index].favorite = true;
 		}
-		data[index] = req.body.note;
 
 		res.status(200).json(data);
 	} catch (error) {
