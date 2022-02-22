@@ -5,10 +5,14 @@ const cors = require('cors');
 const server = express();
 const port = 5000;
 
+const corsOptions = {
+	origin: 'http://localhost:3000' || process.env.CORS_ORIGIN,
+};
+
 const path = require('path');
-server.use(cors());
-server.use('/api/v1/', notesRouter);
+server.use(cors(corsOptions));
 server.use(express.json());
+server.use('/api/v1/', notesRouter);
 // server.use(express.urlencoded({ extended: true }));
 
 const start = () => {

@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Text } from '@chakra-ui/react';
+import { Box, Button, Divider, Flex, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 const NoteCard = ({ note, selectNote, selectedNote }) => {
@@ -41,10 +41,16 @@ const NoteCard = ({ note, selectNote, selectedNote }) => {
 						style={{ fontWeight: 800 }}
 						fontSize="1xl"
 						color={fontColor}
+						textAlign="left"
 					>
 						{note.title}
 					</Text>
-					<Text marginLeft="20px" fontSize="1xl" color={fontColor}>
+					<Text
+						marginLeft="20px"
+						fontSize="1xl"
+						color={fontColor}
+						textAlign="left"
+					>
 						{note.list
 							? note.content[0].split(' ').slice(0, 5).join(' ')
 							: note.content.split(' ').slice(0, 5).join(' ')}

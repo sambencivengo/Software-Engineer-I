@@ -2,12 +2,12 @@ import {
 	Box,
 	Button,
 	Divider,
-	HStack,
-	Link,
 	ListItem,
 	Text,
 	UnorderedList,
 } from '@chakra-ui/react';
+import { AddIcon, StarIcon } from '@chakra-ui/icons';
+
 import Links from './Links';
 
 const SelectedNoteContainer = ({ note, handleFavorite }) => {
@@ -23,7 +23,16 @@ const SelectedNoteContainer = ({ note, handleFavorite }) => {
 			>
 				<Box style={{ padding: '40px' }}>
 					<Text fontSize="4xl" color="black" marginBottom="20px">
-						{note.title}
+						{note.title}{' '}
+						<Button
+							onClick={() => {
+								handleFavorite(note);
+							}}
+							variant="ghost"
+							colorScheme="whiteAlpha"
+						>
+							<StarIcon color="grey" boxSize={6} />
+						</Button>
 					</Text>
 					<Text marginLeft="20px" color="black" fontSize={'2xl'}>
 						{note.list
@@ -36,13 +45,6 @@ const SelectedNoteContainer = ({ note, handleFavorite }) => {
 							  })
 							: note.content}
 					</Text>
-					<Button
-						onClick={() => {
-							handleFavorite(note);
-						}}
-					>
-						❤️
-					</Button>
 
 					<Divider />
 					{note.title.includes('Sam Bencivengo') && <Links />}
