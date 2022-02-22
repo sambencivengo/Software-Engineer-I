@@ -15,11 +15,13 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import './App.css';
+import FavoriteNotesContainer from './components/FavoriteNotesContainer';
 
 import NoteCardContainer from './components/NoteCardContainer';
 import SelectedNoteContainer from './components/SelectedNoteContainer';
 
 const url = 'http://localhost:5000/api/v1/notes';
+const favoritesURL = 'http://localhost:5000/api/v1/favorites';
 
 function App() {
 	const fetchNotes = async (url = '') => {
@@ -44,11 +46,26 @@ function App() {
 		}
 	};
 	const [notes, setNotes] = useState(null);
+	const [favoriteNotes, setFavoriteNotes] = useState(null);
 	const [error, setError] = useState(null);
 	const [selectedNote, setSelectedNote] = useState(null);
 
+	const fetchFavorites = async (url) => {
+		try {
+			const res = await fetch(favoritesURL);
+			const data = await res.json();
+			console.log(data);
+			setFavoriteNotes(data);
+			return data;
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	useEffect(() => {
 		fetchNotes(url);
+
+		fetchFavorites(favoritesURL);
 	}, []);
 
 	const selectNote = (note) => {
@@ -56,14 +73,16 @@ function App() {
 		localStorage.setItem('selectedNote', note.id);
 	};
 
-	const postFav = async (fav) => {
+	const postFav = async (note) => {
+		note.favorite = true;
+
 		try {
 			const res = await fetch('http://localhost:5000/api/v1/favorites', {
-				method: 'POST',
+				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ fav }),
+				body: JSON.stringify({ note }),
 			});
 			const data = await res.json();
 			return data;
@@ -73,17 +92,15 @@ function App() {
 	};
 
 	const favorite = async (note) => {
-		const res = await postFav(note.id);
+		const res = await postFav(note);
 		console.log(res);
 	};
-	const [openDrawer, setOpenDrawer] = useState(false);
 
 	return (
 		<Grid minH="100vh">
 			<Flex color="white" overflowX="scroll">
 				<Box w="50vh" bg="theme.primary" boxShadow="10px 10px">
 					<VStack>
-						{/* <Center> */}
 						<Text
 							as="em"
 							color="black"
@@ -96,7 +113,7 @@ function App() {
 						>
 							Sam's Notes
 						</Text>
-						{/* </Center> */}
+
 						<Tabs
 							variant="soft-rounded"
 							align="center"
@@ -104,14 +121,20 @@ function App() {
 						>
 							<TabList>
 								<Tab>Notes</Tab>
-								<Tab>Favorites</Tab>
+								<Tab
+									onClick={async () =>
+										await fetchFavorites(favoritesURL)
+									}
+								>
+									Favorites
+								</Tab>
 							</TabList>
 							<TabPanels>
 								<TabPanel>
 									{notes && (
 										<NoteCardContainer
-											selectNote={selectNote}
 											notes={notes}
+											selectNote={selectNote}
 											selectedNote={selectedNote}
 										/>
 									)}
@@ -123,7 +146,18 @@ function App() {
 									)}
 								</TabPanel>
 								<TabPanel>
-									<Text fontSize="3xl">Favorites</Text>
+									<FavoriteNotesContainer
+										favorites={favoriteNotes}
+										selectNote={selectNote}
+										selectedNote={selectedNote}
+									/>
+
+									{error && (
+										<h1>
+											Oops!! There was a problem grabbing
+											your notes
+										</h1>
+									)}
 								</TabPanel>
 								<TabPanel>
 									<p>three!</p>

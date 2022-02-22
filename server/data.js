@@ -2,6 +2,7 @@ const data = [
 	{
 		id: 1,
 		title: 'Grocery List',
+		favorite: false,
 		list: true,
 		content: [
 			'Pick up a whole chicken for my famous chicken recipe',
@@ -16,6 +17,7 @@ const data = [
 	{
 		id: 2,
 		title: 'Job Hunt / Programming Work',
+		favorite: false,
 		list: true,
 		content: [
 			'Work on Pantheon Labs Project and submit it ASAP!!!',
@@ -27,6 +29,7 @@ const data = [
 	{
 		id: 3,
 		title: 'Birds Spotted Recently',
+		favorite: false,
 		list: true,
 		content: [
 			' Blue Jay',
@@ -41,6 +44,7 @@ const data = [
 	{
 		id: 4,
 		title: 'Bike Thoughts',
+		favorite: false,
 		list: false,
 		content:
 			'Gotta keep training over hilly terrain as much as possible. Start riding with extra gear and weight on the bike so that you can prepare to ride 100 miles from NYC to Philadelphia.',
@@ -48,6 +52,7 @@ const data = [
 	{
 		id: 5,
 		title: 'List of wines to buy...',
+		favorite: false,
 		list: true,
 		content: [
 			'Hahn Pinot Noir',
@@ -60,6 +65,7 @@ const data = [
 	{
 		id: 6,
 		title: 'Who is Sam Bencivengo?',
+		favorite: false,
 		list: false,
 		content:
 			"...and why did I build this simulation of my notes app? I wanted to whip up something clean, impressive and practical that would tell you about who I am. So who am I? I am a birdwatcher, cyclist, cook and developer. That's about as concise as I can put it. Each note should be a little slice of something I enjoy doing or consumning, from cooking big dinners, heading to the park to go birdwatching or just riding my bike. I hope you enjoy this application as much as I enjoyed building it and I am looking forward to hearing from you!",

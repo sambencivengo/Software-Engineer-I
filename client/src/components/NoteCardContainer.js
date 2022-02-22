@@ -1,13 +1,5 @@
-import {
-	Box,
-	Center,
-	Divider,
-	Flex,
-	StackDivider,
-	VStack,
-} from '@chakra-ui/react';
+import { Divider, VStack } from '@chakra-ui/react';
 import NoteCard from './NoteCard';
-import { Text } from '@chakra-ui/react';
 
 const NoteCardContainer = ({ notes, selectNote, selectedNote }) => {
 	return (

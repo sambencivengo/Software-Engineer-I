@@ -29,7 +29,7 @@ const SelectedNoteContainer = ({ note, handleFavorite }) => {
 								handleFavorite(note);
 							}}
 							variant="ghost"
-							colorScheme="whiteAlpha"
+							colorScheme='whiteAlpha'
 						>
 							<StarIcon color="grey" boxSize={6} />
 						</Button>

@@ -1,4 +1,5 @@
 const runningFavs = [];
+const data = require('../data');
 
 const getFavs = async (req, res) => {
 	try {
@@ -7,23 +8,21 @@ const getFavs = async (req, res) => {
 		console.log(error);
 	}
 };
-const postFavs = async (req, res) => {
+
+const favNote = async (req, res) => {
 	try {
-		console.log(req.body);
-
-		if (runningFavs.includes(req.body.fav)) {
-			res.status(400).json({
-				msg: 'This note is already in your favorites',
-				notes: runningFavs,
-			});
-			return;
+		const index = data.findIndex((note) => note.id === req.body.note.id);
+		if (data[index].favorite) {
+			res.status(400).json(
+				'This note is already added to your favorites'
+			);
 		}
-		runningFavs.push(req.body.fav);
+		data[index] = req.body.note;
 
-		res.status(202).json(runningFavs);
+		res.status(200).json(data);
 	} catch (error) {
 		console.log(error);
 	}
 };
 
-module.exports = { getFavs, postFavs };
+module.exports = { getFavs, favNote };
